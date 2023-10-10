@@ -2,7 +2,7 @@ const express = require("express");
 require("dotenv").config();
 
 const app = express();
-
+app.use(express.json());
 const port = process.env.APP_PORT ?? 5001;
 
 const welcome = (req, res) => {
@@ -11,11 +11,14 @@ const welcome = (req, res) => {
 
 app.get("/", welcome);
 movieHandlers = require("./movieHandlers");
-usersHandlers = require("./movieHandlers");
+userHandlers = require("./movieHandlers");
 app.get("/api/movies", movieHandlers.getMovies);
 app.get("/api/movies/:id", movieHandlers.getMovieById);
-app.get("/api/users", usersHandlers.getUsers);
-app.get("/api/users/:id", usersHandlers.getUserById )
+app.get("/api/users", userHandlers.getUsers);
+app.get("/api/users/:id", userHandlers.getUserById);
+app.post("/api/movies", movieHandlers.postMovie);
+app.post("/api/users", userHandlers.postUser)
+
 app.listen(port, (err) => {
   if (err) {
     console.error("Something bad happened");
